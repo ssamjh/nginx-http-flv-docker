@@ -5,7 +5,6 @@ FROM alpine:3.20 AS base
 
 RUN apk add --no-cache pcre openssl
 
-
 FROM base AS build
 ARG NGINX_VERSION
 ARG NGINX_HTTP_FLV_VERSION
@@ -25,13 +24,10 @@ RUN \
     cd .. && \
     rm -rf nginx-* v${NGINX_HTTP_FLV_VERSION}.tar.gz
 
-
 FROM base AS release
 COPY --from=build /usr/local/nginx /usr/local/nginx
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
-RUN \
-    apk add --no-cache pcre openssl && \
-    rm -rf /var/cache/apk/* /tmp/*
+RUN rm -rf /var/cache/apk/* /tmp/*
 
 EXPOSE 1935
 EXPOSE 8080
