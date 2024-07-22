@@ -9,7 +9,7 @@ services:
       - "1935:1935"
       - "8080:8080"
     tmpfs:
-      - /tmp/hls:exec,rw,noatime,mode=1777,size=64m
+      - /tmp/hls:exec,rw,noatime,mode=1777,size=128m
     volumes:
       - ./nginx.conf:/usr/local/nginx/conf/nginx.conf:ro
     restart: unless-stopped

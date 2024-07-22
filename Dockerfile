@@ -21,14 +21,19 @@ RUN \
     cd nginx-${NGINX_VERSION} && \
     ./configure --add-module=../nginx-http-flv-module-${NGINX_HTTP_FLV_VERSION} && \
     make && \
-    make install
+    make install && \
+    cd .. && \
+    rm -rf nginx-* v${NGINX_HTTP_FLV_VERSION}.tar.gz
 
 
 FROM base AS release
 COPY --from=build /usr/local/nginx /usr/local/nginx
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
+RUN \
+    apk add --no-cache pcre openssl && \
+    rm -rf /var/cache/apk/* /tmp/*
 
 EXPOSE 1935
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["/usr/local/nginx/sbin/nginx"]
