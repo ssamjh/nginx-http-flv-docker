@@ -1,11 +1,8 @@
-ARG NGINX_VERSION=1.14.2
-ARG NGINX_HTTP_FLV_VERSION=1.2.5
+ARG NGINX_VERSION=1.26.1
+ARG NGINX_HTTP_FLV_VERSION=1.2.11
 
-FROM alpine:3.8 AS base
+FROM alpine:3.20 AS base
 
-# Add Alpine Linux Chinese mirror
-RUN echo "https://mirror.tuna.tsinghua.edu.cn/alpine/v3.8/main" > /etc/apk/repositories
-RUN echo "https://mirror.tuna.tsinghua.edu.cn/alpine/v3.8/community" >> /etc/apk/repositories
 RUN apk add --no-cache pcre openssl
 
 
@@ -13,7 +10,7 @@ FROM base AS build
 ARG NGINX_VERSION
 ARG NGINX_HTTP_FLV_VERSION
 
-RUN apk add build-base pcre-dev openssl-dev
+RUN apk add --no-cache build-base pcre-dev openssl-dev zlib-dev
 
 WORKDIR /tmp
 RUN \
@@ -28,7 +25,6 @@ RUN \
 
 
 FROM base AS release
-LABEL MAINTAINER YE Ying-xian <yeyingxian@163.com>
 COPY --from=build /usr/local/nginx /usr/local/nginx
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 
