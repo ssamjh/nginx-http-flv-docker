@@ -11,3 +11,4 @@ services:
       - /tmp/hls:exec,rw,noatime,mode=1777,size=64m
     volumes:
       - ./nginx.conf:/usr/local/nginx/conf/nginx.conf:ro
+    restart: unless-stopped
