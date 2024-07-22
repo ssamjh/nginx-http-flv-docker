@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: nginx-http-flv
+    #network_mode: host
     ports:
       - "1935:1935"
       - "8080:80"
