@@ -12,3 +12,8 @@ services:
     volumes:
       - ./nginx.conf:/usr/local/nginx/conf/nginx.conf:ro
     restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
